@@ -4,10 +4,6 @@ import com.eci.cosw.project.quicklyshop.security.model.User;
 
 import java.util.List;
 
-/**
- * @author Santiago Carrillo
- * 8/21/17.
- */
 public interface UserService
 {
     List<User> getUsers();

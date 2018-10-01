@@ -1,5 +1,8 @@
 package com.eci.cosw.project.quicklyshop.security.config;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureException;
 import org.springframework.web.filter.GenericFilterBean;
 
 import javax.servlet.FilterChain;
@@ -10,10 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * @author Santiago Carrillo
- * 8/21/17.
- */
+
 public class JwtFilter
     extends GenericFilterBean
 {
@@ -43,15 +43,15 @@ public class JwtFilter
 
             final String token = authHeader.substring( 7 );
 
-//            try
-//            {
-//                final Claims claims = Jwts.parser().setSigningKey( "secretkey" ).parseClaimsJws( token ).getBody();
-//                request.setAttribute( "claims", claims );
-//            }
-//            catch ( final SignatureException e )
-//            {
-//                throw new ServletException( "Invalid token" );
-//            }
+            try
+            {
+                final Claims claims = Jwts.parser().setSigningKey( "secretkey" ).parseClaimsJws( token ).getBody();
+                request.setAttribute( "claims", claims );
+            }
+            catch ( final SignatureException e )
+            {
+                throw new ServletException( "Invalid token" );
+            }
 
             filterChain.doFilter( servletRequest, response );
         }

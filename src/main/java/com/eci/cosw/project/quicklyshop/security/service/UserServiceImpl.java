@@ -8,10 +8,6 @@ import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author Santiago Carrillo
- * 8/21/17.
- */
 @Service
 public class UserServiceImpl
     implements UserService
