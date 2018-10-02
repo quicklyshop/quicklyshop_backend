@@ -368,7 +368,8 @@ gradle-app.setting
 # General
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 
@@ -547,6 +548,5 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
-
-
+.idea/
 # End of https://www.gitignore.io/api/reactnative,linux,macos,windows,node,emacs,java,intellij,netbeans,eclipse
