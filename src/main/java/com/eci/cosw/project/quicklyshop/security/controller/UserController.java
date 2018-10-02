@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.ServletException;
 import java.util.Date;
+import javax.validation.constraints.Max;
+import java.util.List;
 
 @RestController
 @RequestMapping( "user" )
@@ -21,6 +23,7 @@ public class UserController
     @Autowired
     private UserService userService;
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping( value = "/login", method = RequestMethod.POST )
     public Token login( @RequestBody User login )
         throws ServletException

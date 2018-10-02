@@ -6,10 +6,15 @@ import com.eci.cosw.project.quicklyshop.security.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class ProductServiceImpl implements ProductService{
 
     private List<Product> products = new ArrayList<>();
 
+    @Autowired
+    public ProductServiceImpl()
+    {
+    }
 
 
     @Override
@@ -18,7 +23,8 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Product addProduct(Product product) {
-        return null;
+    public void addProduct(Product product) {
+        product.add(product);
+
     }
 }
