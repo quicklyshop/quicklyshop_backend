@@ -5,13 +5,8 @@ import com.eci.cosw.project.quicklyshop.security.service.ProductService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-import javax.servlet.ServletException;
-import java.util.Date;
-import javax.validation.constraints.Max;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController

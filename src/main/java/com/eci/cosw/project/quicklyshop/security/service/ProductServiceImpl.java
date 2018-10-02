@@ -2,6 +2,8 @@ package com.eci.cosw.project.quicklyshop.security.service;
 
 import com.eci.cosw.project.quicklyshop.security.model.Product;
 import com.eci.cosw.project.quicklyshop.security.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +26,7 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public void addProduct(Product product) {
-        product.add(product);
+        products.add(product);
 
     }
 }
