@@ -8,9 +8,21 @@ public interface UserService
 {
     List<User> getUsers();
 
-    User getUser( String username );
+    /**
+     * Obtiene un usuario
+     * @param username nombre del usuario
+     * @return usuario
+     * @throws UserServiceException el usuario no existe
+     */
+    User getUser( String username ) throws UserServiceException;
 
-    User createUser( User user );
+    /**
+     * Crea un usuario nuevo
+     * @param user usuario
+     * @return usuario creado
+     * @throws UserServiceException ya existe el usuario
+     */
+    User createUser( User user ) throws UserServiceException;
 
     User findUserByEmail( String email );
 

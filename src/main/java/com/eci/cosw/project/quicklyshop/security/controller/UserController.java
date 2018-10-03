@@ -1,22 +1,22 @@
 package com.eci.cosw.project.quicklyshop.security.controller;
 
 import com.eci.cosw.project.quicklyshop.security.digestfunctions.DigestFunction;
-import com.eci.cosw.project.quicklyshop.security.model.Token;
+import com.eci.cosw.project.quicklyshop.security.model.RegistrationForm;
 import com.eci.cosw.project.quicklyshop.security.model.User;
 import com.eci.cosw.project.quicklyshop.security.model.UserCredential;
 import com.eci.cosw.project.quicklyshop.security.model.UserLogin;
-import com.eci.cosw.project.quicklyshop.security.service.TokenService;
-import com.eci.cosw.project.quicklyshop.security.service.UserCredentialService;
-import com.eci.cosw.project.quicklyshop.security.service.UserCredentialServiceException;
-import com.eci.cosw.project.quicklyshop.security.service.UserService;
+import com.eci.cosw.project.quicklyshop.security.service.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("user")
 public class UserController {
 
@@ -31,9 +31,8 @@ public class UserController {
     @Autowired
     TokenService tokenService;
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Token login(@RequestBody UserLogin login) throws ServletException, UserCredentialServiceException {
+    public ResponseEntity<?> login(@RequestBody UserLogin login) throws ServletException, UserCredentialServiceException {
         logger.debug("Access token requested by: \"{}\"", login.getUsername());
 
         if (login.getUsername() == null || login.getPassword() == null) {
@@ -43,7 +42,14 @@ public class UserController {
         String username = login.getUsername();
         String password = login.getPassword();
 
-        User user = userService.getUser(username);
+        User user = null;
+
+        try {
+            user = userService.getUser(username);
+        } catch (UserServiceException ex) {
+            logger.error(ex.getMessage());
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.FORBIDDEN);
+        }
 
         if (user == null) {
             throw new ServletException("User username not found.");
@@ -57,7 +63,26 @@ public class UserController {
         }
 
         logger.debug("Access token granted to: \"{}\"", login.getUsername());
-        return tokenService.generateToken(username, password);
+        return new ResponseEntity<>(tokenService.generateToken(username, password), HttpStatus.OK);
+    }
+
+
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@RequestBody RegistrationForm reg) {
+        if (!reg.getUser().getUsername().equals(reg.getUserLogin().getUsername())) {
+            String msg = "El usuario de logueo y de datos no coinciden";
+            logger.error(msg);
+            return new ResponseEntity<>(msg, HttpStatus.FORBIDDEN);
+        }
+
+        try {
+            userService.createUser(reg.getUser());
+            credentialService.registerPasswordCredentials(reg.getUserLogin().getUsername(), reg.getUserLogin().getPassword());
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (UserServiceException ex) {
+            logger.error(ex.getMessage());
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.FORBIDDEN);
+        }
     }
 
 }

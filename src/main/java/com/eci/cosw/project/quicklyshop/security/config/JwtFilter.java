@@ -15,45 +15,36 @@ import java.io.IOException;
 
 
 public class JwtFilter
-    extends GenericFilterBean
-{
+        extends GenericFilterBean {
 
-    public void doFilter( final ServletRequest servletRequest, final ServletResponse servletResponse,
-                          final FilterChain filterChain )
-        throws IOException, ServletException
-    {
+    public void doFilter(final ServletRequest servletRequest, final ServletResponse servletResponse,
+                         final FilterChain filterChain)
+            throws IOException, ServletException {
 
         final HttpServletRequest request = (HttpServletRequest) servletRequest;
         final HttpServletResponse response = (HttpServletResponse) servletResponse;
-        final String authHeader = request.getHeader( "authorization" );
+        final String authHeader = request.getHeader("authorization");
 
-        if ( "OPTIONS".equals( request.getMethod() ) )
-        {
-            response.setStatus( HttpServletResponse.SC_OK );
+        if ("OPTIONS".equals(request.getMethod())) {
+            response.setStatus(HttpServletResponse.SC_OK);
 
-            filterChain.doFilter( servletRequest, response );
-        }
-        else
-        {
+            filterChain.doFilter(servletRequest, response);
+        } else {
 
-            if ( authHeader == null || !authHeader.startsWith( "Bearer " ) )
-            {
-                throw new ServletException( "Missing or invalid Authorization header" );
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                throw new ServletException("Missing or invalid Authorization header");
             }
 
-            final String token = authHeader.substring( 7 );
+            final String token = authHeader.substring(7);
 
-            try
-            {
-                final Claims claims = Jwts.parser().setSigningKey( "secretkey" ).parseClaimsJws( token ).getBody();
-                request.setAttribute( "claims", claims );
-            }
-            catch ( final SignatureException e )
-            {
-                throw new ServletException( "Invalid token" );
+            try {
+                final Claims claims = Jwts.parser().setSigningKey("secretkey").parseClaimsJws(token).getBody();
+                request.setAttribute("claims", claims);
+            } catch (final SignatureException e) {
+                throw new ServletException("Invalid token");
             }
 
-            filterChain.doFilter( servletRequest, response );
+            filterChain.doFilter(servletRequest, response);
         }
     }
 }

@@ -8,23 +8,22 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping( "api" )
-public class ProductController
-{
+@CrossOrigin(origins = "*")
+@RequestMapping("api")
+public class ProductController {
 
     @Autowired
     private ProductService productService;
 
-    @CrossOrigin(origins = "http://localhost:3000")
-    @RequestMapping( value = "/products", method = RequestMethod.GET )
-    public List<Product> getProductList(){
+
+    @RequestMapping(value = "/products", method = RequestMethod.GET)
+    public List<Product> getProductList() {
         return productService.getProductList();
     }
 
 
-    @CrossOrigin(origins = "http://localhost:3000")
-    @RequestMapping( value = "/products", method = RequestMethod.POST )
-    public void addProduct(@RequestBody Product product){
+    @RequestMapping(value = "/products", method = RequestMethod.POST)
+    public void addProduct(@RequestBody Product product) {
         productService.addProduct(product);
     }
 

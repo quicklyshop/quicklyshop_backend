@@ -22,7 +22,7 @@ public class TokenServiceImplDummy implements TokenService {
     @Override
     public Token generateToken(String username, String password) {
         Token newToken = new Token(Jwts.builder().setSubject(username).claim("roles", "user").setIssuedAt(new Date()).signWith(
-                SignatureAlgorithm.HS256, password).compact());
+                SignatureAlgorithm.HS256, "secretkey").compact());
 
         tokens.put(username, newToken);
 

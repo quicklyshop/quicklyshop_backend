@@ -14,6 +14,8 @@ import java.util.Map;
 @Service
 public class UserCredentialServiceImplDummy implements UserCredentialService {
 
+    public static final String CURRENT_HASH_METHOD = "raw"; // TODO
+
     private Map<String, UserCredential> credentials;
 
     public UserCredentialServiceImplDummy() {
@@ -42,6 +44,13 @@ public class UserCredentialServiceImplDummy implements UserCredentialService {
         }
 
         credentials.put(username, userCredentials);
+    }
+
+    @Override
+    public void registerPasswordCredentials(String username, String rawPassword) throws NullPointerException {
+        DigestFunction dfunc = getDigestFunction(CURRENT_HASH_METHOD);
+        UserCredential userCredential = new UserCredential(String.valueOf(dfunc.encode(rawPassword)), CURRENT_HASH_METHOD);
+        registerCredentials(username, userCredential);
     }
 
     @Override

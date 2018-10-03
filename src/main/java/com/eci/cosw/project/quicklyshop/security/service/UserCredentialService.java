@@ -27,6 +27,14 @@ public interface UserCredentialService {
     void registerCredentials(String username, UserCredential credentials) throws NullPointerException;
 
     /**
+     * Registra nuevas credenciales para un usuario, junto con su contrasena
+     * @param username nombre de usuario
+     * @param rawPassword contrasena de usuario en texto plano
+     * @throws NullPointerException el usuario o la contrasena son nulos
+     */
+    void registerPasswordCredentials(String username, String rawPassword) throws NullPointerException;
+
+    /**
      * Da la clase de funcion de digest para calcular el hash
      * @param digestFunctionName nombre de funcion de hash
      * @return la funcion de hash
