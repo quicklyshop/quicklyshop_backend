@@ -69,6 +69,7 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody RegistrationForm reg) {
+        logger.debug("Entra a registrar usuario");
         if (!reg.getUser().getUsername().equals(reg.getUserLogin().getUsername())) {
             String msg = "El usuario de logueo y de datos no coinciden";
             logger.error(msg);
