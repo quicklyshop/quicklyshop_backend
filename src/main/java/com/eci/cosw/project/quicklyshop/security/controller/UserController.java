@@ -1,9 +1,11 @@
 package com.eci.cosw.project.quicklyshop.security.controller;
 
 import com.eci.cosw.project.quicklyshop.security.functions.DigestFunction;
+import com.eci.cosw.project.quicklyshop.security.model.Token;
 import com.eci.cosw.project.quicklyshop.security.model.User;
 import com.eci.cosw.project.quicklyshop.security.model.UserCredential;
 import com.eci.cosw.project.quicklyshop.security.model.UserLogin;
+import com.eci.cosw.project.quicklyshop.security.service.TokenService;
 import com.eci.cosw.project.quicklyshop.security.service.UserCredentialService;
 import com.eci.cosw.project.quicklyshop.security.service.UserCredentialServiceException;
 import com.eci.cosw.project.quicklyshop.security.service.UserService;
@@ -29,12 +31,13 @@ public class UserController {
     @Autowired
     UserCredentialService credentialService;
 
+    @Autowired
+    TokenService tokenService;
+
     @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Token login(@RequestBody UserLogin login) throws ServletException, UserCredentialServiceException {
         logger.debug("Access token requested by: \"{}\"", login.getUsername());
-
-        String jwtToken = "";
 
         if (login.getUsername() == null || login.getPassword() == null) {
             throw new ServletException("Please fill in username and password");
@@ -56,27 +59,8 @@ public class UserController {
             throw new ServletException("Invalid login. Please check your name and password.");
         }
 
-        jwtToken = Jwts.builder().setSubject(username).claim("roles", "user").setIssuedAt(new Date()).signWith(
-                SignatureAlgorithm.HS256, password).compact();
-
         logger.debug("Access token granted to: \"{}\"", login.getUsername());
-        return new Token(jwtToken);
-    }
-
-    public class Token {
-        String access_token;
-
-        public Token(String access_token) {
-            this.access_token = access_token;
-        }
-
-        public String getAccessToken() {
-            return access_token;
-        }
-
-        public void setAccessToken(String access_token) {
-            this.access_token = access_token;
-        }
+        return tokenService.generateToken(username, password);
     }
 
 }

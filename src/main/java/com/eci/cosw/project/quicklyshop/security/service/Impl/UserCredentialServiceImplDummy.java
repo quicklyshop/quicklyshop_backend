@@ -1,8 +1,10 @@
-package com.eci.cosw.project.quicklyshop.security.service;
+package com.eci.cosw.project.quicklyshop.security.service.Impl;
 
 import com.eci.cosw.project.quicklyshop.security.functions.DigestFunction;
 import com.eci.cosw.project.quicklyshop.security.functions.DummyDigestFunction;
 import com.eci.cosw.project.quicklyshop.security.model.UserCredential;
+import com.eci.cosw.project.quicklyshop.security.service.UserCredentialService;
+import com.eci.cosw.project.quicklyshop.security.service.UserCredentialServiceException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;

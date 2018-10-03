@@ -1,6 +1,7 @@
-package com.eci.cosw.project.quicklyshop.security.service;
+package com.eci.cosw.project.quicklyshop.security.service.Impl;
 
 import com.eci.cosw.project.quicklyshop.security.model.User;
+import com.eci.cosw.project.quicklyshop.security.service.UserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;

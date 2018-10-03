@@ -1,22 +1,20 @@
-package com.eci.cosw.project.quicklyshop.security.service;
+package com.eci.cosw.project.quicklyshop.security.service.Impl;
 
 import com.eci.cosw.project.quicklyshop.security.model.Product;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.eci.cosw.project.quicklyshop.security.service.ProductService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService {
 
-    private List<Product> products = new ArrayList<>();
+    private List<Product> products;
 
-    @Autowired
-    public ProductServiceImpl()
-    {
+    public ProductServiceImpl() {
+        products = new ArrayList<>();
     }
-
 
     @Override
     public List<Product> getProductList() {
