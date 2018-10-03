@@ -1,4 +1,4 @@
-package com.eci.cosw.project.quicklyshop.security.functions;
+package com.eci.cosw.project.quicklyshop.security.digestfunctions;
 
 public class DummyDigestFunction implements DigestFunction {
 

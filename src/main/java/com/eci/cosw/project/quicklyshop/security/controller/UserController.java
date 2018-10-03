@@ -1,6 +1,6 @@
 package com.eci.cosw.project.quicklyshop.security.controller;
 
-import com.eci.cosw.project.quicklyshop.security.functions.DigestFunction;
+import com.eci.cosw.project.quicklyshop.security.digestfunctions.DigestFunction;
 import com.eci.cosw.project.quicklyshop.security.model.Token;
 import com.eci.cosw.project.quicklyshop.security.model.User;
 import com.eci.cosw.project.quicklyshop.security.model.UserCredential;
@@ -9,15 +9,12 @@ import com.eci.cosw.project.quicklyshop.security.service.TokenService;
 import com.eci.cosw.project.quicklyshop.security.service.UserCredentialService;
 import com.eci.cosw.project.quicklyshop.security.service.UserCredentialServiceException;
 import com.eci.cosw.project.quicklyshop.security.service.UserService;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
-import java.util.Date;
 
 @RestController
 @RequestMapping("user")

@@ -1,7 +1,7 @@
 package com.eci.cosw.project.quicklyshop.security.service.Impl;
 
-import com.eci.cosw.project.quicklyshop.security.functions.DigestFunction;
-import com.eci.cosw.project.quicklyshop.security.functions.DummyDigestFunction;
+import com.eci.cosw.project.quicklyshop.security.digestfunctions.DigestFunction;
+import com.eci.cosw.project.quicklyshop.security.digestfunctions.DummyDigestFunction;
 import com.eci.cosw.project.quicklyshop.security.model.UserCredential;
 import com.eci.cosw.project.quicklyshop.security.service.UserCredentialService;
 import com.eci.cosw.project.quicklyshop.security.service.UserCredentialServiceException;

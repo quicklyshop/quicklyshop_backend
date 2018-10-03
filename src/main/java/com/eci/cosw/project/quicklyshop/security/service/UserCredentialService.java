@@ -1,6 +1,6 @@
 package com.eci.cosw.project.quicklyshop.security.service;
 
-import com.eci.cosw.project.quicklyshop.security.functions.DigestFunction;
+import com.eci.cosw.project.quicklyshop.security.digestfunctions.DigestFunction;
 import com.eci.cosw.project.quicklyshop.security.model.UserCredential;
 
 public interface UserCredentialService {
