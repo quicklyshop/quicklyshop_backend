@@ -9,6 +9,8 @@ import com.eci.cosw.project.quicklyshop.security.service.UserCredentialServiceEx
 import com.eci.cosw.project.quicklyshop.security.service.UserService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +21,8 @@ import java.util.Date;
 @RequestMapping("user")
 public class UserController {
 
+    private static final Logger logger = LogManager.getLogger(UserController.class);
+
     @Autowired
     private UserService userService;
 
@@ -28,7 +32,7 @@ public class UserController {
     @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Token login(@RequestBody UserLogin login) throws ServletException, UserCredentialServiceException {
-        System.out.println("Access token requested by: " + login.getUsername());
+        logger.debug("Access token requested by: \"{}\"", login.getUsername());
 
         String jwtToken = "";
 
@@ -55,7 +59,7 @@ public class UserController {
         jwtToken = Jwts.builder().setSubject(username).claim("roles", "user").setIssuedAt(new Date()).signWith(
                 SignatureAlgorithm.HS256, password).compact();
 
-        System.out.println("Access token granted to: " + login.getUsername());
+        logger.debug("Access token granted to: \"{}\"", login.getUsername());
         return new Token(jwtToken);
     }
 

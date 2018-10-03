@@ -1,15 +1,15 @@
 buildscript {
-	ext {
-		springBootVersion = '2.0.0.BUILD-SNAPSHOT'
-	}
-	repositories {
-		mavenCentral()
-		maven { url "https://repo.spring.io/snapshot" }
-		maven { url "https://repo.spring.io/milestone" }
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-	}
+    ext {
+        springBootVersion = '2.0.0.BUILD-SNAPSHOT'
+    }
+    repositories {
+        mavenCentral()
+        maven { url "https://repo.spring.io/snapshot" }
+        maven { url "https://repo.spring.io/milestone" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
 }
 
 apply plugin: 'java'
@@ -21,14 +21,24 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
 repositories {
-	mavenCentral()
-	maven { url "https://repo.spring.io/snapshot" }
-	maven { url "https://repo.spring.io/milestone" }
+    mavenCentral()
+    maven { url "https://repo.spring.io/snapshot" }
+    maven { url "https://repo.spring.io/milestone" }
 }
 
 
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-web')
-	compile('io.jsonwebtoken:jjwt:0.6.0')
-	testCompile('org.springframework.boot:spring-boot-starter-test')
+//    compile group: 'org.slf4j', name: 'log4j-over-slf4j', version: '1.7.25'
+
+
+    compile('org.springframework.boot:spring-boot-starter-web') {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+    compile('org.springframework.boot:spring-boot-starter-log4j2')
+
+//    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.11.1'
+//    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.1'
+
+    compile('io.jsonwebtoken:jjwt:0.6.0')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
 }
