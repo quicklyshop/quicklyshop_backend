@@ -13,15 +13,15 @@ public class Product {
     private String supplier;
 
 
-    public Product(){
-
+    public Product() {
+        this("", 0.0, "", "");
     }
 
-    public Product(String name,double price, String description,String supplier){
-        this.name=name;
-        this.price=price;
-        this.description=description;
-        this.supplier=supplier;
+    public Product(String name, double price, String description, String supplier) {
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.supplier = supplier;
     }
 
     public long getId() {

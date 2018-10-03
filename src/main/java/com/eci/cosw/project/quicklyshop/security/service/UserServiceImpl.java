@@ -9,24 +9,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UserServiceImpl
-    implements UserService
-{
+public class UserServiceImpl implements UserService {
 
-    private List<User> users = new ArrayList<>();
+    private List<User> users;
 
-
-    @Autowired
-    public UserServiceImpl()
-    {
+    public UserServiceImpl() {
+        users = new ArrayList<>();
     }
 
     @PostConstruct
-    private void populateSampleData()
-    {
-        users.add( new User( "test@mail.com", "password", "Andres", "Perez" ) );
+    private void populateSampleData() {
+        users.add( new User( "test@mail.com", "Andres", "Perez" , "andres-perez") );
     }
-
 
     @Override
     public List<User> getUsers()
@@ -35,27 +29,27 @@ public class UserServiceImpl
     }
 
     @Override
-    public User getUser( Long id )
+    public User getUser( String username )
     {
         return users.get( 0 );
-    }
+    } // TODO
 
     @Override
     public User createUser( User user )
     {
         return users.get( 0 );
-    }
+    } // TODO
 
     @Override
     public User findUserByEmail( String email )
     {
         return users.get( 0 );
-    }
+    } // TODO
 
     @Override
     public User findUserByEmailAndPassword( String email, String password )
     {
         return users.get( 0 );
-    }
+    } // TODO
 
 }

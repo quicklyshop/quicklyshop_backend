@@ -11,25 +11,22 @@ public class User
 
     private String email;
 
-    private String password;
-
     private String firstname;
 
     private String lastname;
 
     private String username;
 
-
-    public User()
-    {
+    public User() {
+        this("", "", "", "");
     }
 
-    public User( String email, String password, String firstname, String lastname )
+    public User( String email, String firstname, String lastname, String username )
     {
         this.email = email;
-        this.password = password;
         this.firstname = firstname;
         this.lastname = lastname;
+        this.username = username;
     }
 
 
@@ -51,16 +48,6 @@ public class User
     public void setEmail( String email )
     {
         this.email = email;
-    }
-
-    public String getPassword()
-    {
-        return password;
-    }
-
-    public void setPassword( String password )
-    {
-        this.password = password;
     }
 
     public String getFirstname()
@@ -94,9 +81,13 @@ public class User
     }
 
     @Override
-    public String toString()
-    {
-        return "User{" + "id=" + id + ", email='" + email + '\'' + ", password='" + password + '\'' + ", firstname='"
-            + firstname + '\'' + '}';
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", username='" + username + '\'' +
+                '}';
     }
 }

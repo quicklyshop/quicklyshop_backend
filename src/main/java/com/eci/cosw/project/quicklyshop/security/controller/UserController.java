@@ -1,6 +1,11 @@
 package com.eci.cosw.project.quicklyshop.security.controller;
 
+import com.eci.cosw.project.quicklyshop.security.functions.DigestFunction;
 import com.eci.cosw.project.quicklyshop.security.model.User;
+import com.eci.cosw.project.quicklyshop.security.model.UserCredential;
+import com.eci.cosw.project.quicklyshop.security.model.UserLogin;
+import com.eci.cosw.project.quicklyshop.security.service.UserCredentialService;
+import com.eci.cosw.project.quicklyshop.security.service.UserCredentialServiceException;
 import com.eci.cosw.project.quicklyshop.security.service.UserService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -9,72 +14,63 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
 import java.util.Date;
-import javax.validation.constraints.Max;
-import java.util.List;
 
 @RestController
-@RequestMapping( "user" )
-public class UserController
-{
+@RequestMapping("user")
+public class UserController {
 
     @Autowired
     private UserService userService;
 
+    @Autowired
+    UserCredentialService credentialService;
+
     @CrossOrigin(origins = "http://localhost:3000")
-    @RequestMapping( value = "/login", method = RequestMethod.POST )
-    public Token login( @RequestBody User login )
-        throws ServletException
-    {
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public Token login(@RequestBody UserLogin login) throws ServletException, UserCredentialServiceException {
+        System.out.println("Access token requested by: " + login.getUsername());
 
         String jwtToken = "";
 
-        if ( login.getUsername() == null || login.getPassword() == null )
-        {
-            throw new ServletException( "Please fill in username and password" );
+        if (login.getUsername() == null || login.getPassword() == null) {
+            throw new ServletException("Please fill in username and password");
         }
 
         String username = login.getUsername();
         String password = login.getPassword();
 
-        User user = userService.getUser( 0l );
+        User user = userService.getUser(username);
 
-        if ( user == null )
-        {
-            throw new ServletException( "User username not found." );
+        if (user == null) {
+            throw new ServletException("User username not found.");
         }
 
-        String pwd = user.getPassword();
+        UserCredential uCreds = credentialService.getUserCredential(user.getUsername());
+        DigestFunction func = credentialService.getDigestFunction(uCreds.getHashFunction());
 
-        if ( !password.equals( pwd ) )
-        {
-            throw new ServletException( "Invalid login. Please check your name and password." );
+        if (!func.matches(password, uCreds.getHashedPassword())) {
+            throw new ServletException("Invalid login. Please check your name and password.");
         }
 
-        jwtToken = Jwts.builder().setSubject( username ).claim( "roles", "user" ).setIssuedAt( new Date() ).signWith(
-            SignatureAlgorithm.HS256, "secretkey" ).compact();
+        jwtToken = Jwts.builder().setSubject(username).claim("roles", "user").setIssuedAt(new Date()).signWith(
+                SignatureAlgorithm.HS256, password).compact();
 
-        return new Token( jwtToken );
+        System.out.println("Access token granted to: " + login.getUsername());
+        return new Token(jwtToken);
     }
 
-    public class Token
-    {
-
+    public class Token {
         String access_token;
 
-
-        public Token( String access_token )
-        {
+        public Token(String access_token) {
             this.access_token = access_token;
         }
 
-
-        public String getAccessToken()
-        {
+        public String getAccessToken() {
             return access_token;
         }
 
-        public void setAccessToken( String access_token )
-        {
+        public void setAccessToken(String access_token) {
             this.access_token = access_token;
         }
     }
