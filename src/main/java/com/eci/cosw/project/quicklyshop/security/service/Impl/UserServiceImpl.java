@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
 
     @PostConstruct
     private void populateSampleData() {
-        users.add( new User( "test@mail.com", "Andres", "Perez" , "andres-perez") );
+        users.add( new User( "test@mail.com", "Andres", "Perez" , "andres-perez", "3121234567", "Cr. 1 # 1 - 1") );
     }
 
     @Override
