@@ -76,11 +76,20 @@ public class UserController {
             return new ResponseEntity<>(msg, HttpStatus.FORBIDDEN);
         }
 
+        logger.debug("Usernames coinciden!");
+        logger.debug("User --> "+reg.getUser());
+        logger.debug("User Login -->"+reg.getUserLogin());
+
+
         try {
+            logger.debug("Creando usuario");
             userService.createUser(reg.getUser());
+            logger.debug("Usuario creado!");
             credentialService.registerPasswordCredentials(reg.getUserLogin().getUsername(), reg.getUserLogin().getPassword());
+            logger.debug("Registro de credenciales hecho");
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (UserServiceException ex) {
+            logger.debug("Error!");
             logger.error(ex.getMessage());
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.FORBIDDEN);
         }
