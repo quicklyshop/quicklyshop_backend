@@ -1,12 +1,17 @@
 package com.eci.cosw.project.quicklyshop.security.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 /**
  * @author Santiago Carrillo
  * 8/21/17.
  */
+
+@Document
 public class User
 {
-
+    @Id
     private long id;
 
     private String email;
