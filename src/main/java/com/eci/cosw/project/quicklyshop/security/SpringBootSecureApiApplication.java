@@ -2,6 +2,8 @@ package com.eci.cosw.project.quicklyshop.security;
 
 import com.eci.cosw.project.quicklyshop.security.config.JwtFilter;
 import com.eci.cosw.project.quicklyshop.security.model.User;
+import com.eci.cosw.project.quicklyshop.security.model.UserCredential;
+import com.eci.cosw.project.quicklyshop.security.service.persistence.UserCredentialRepository;
 import com.eci.cosw.project.quicklyshop.security.service.persistence.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -25,6 +27,9 @@ public class SpringBootSecureApiApplication implements CommandLineRunner {
         
         @Autowired
         private UserRepository userRepository;
+        
+        @Autowired
+        private UserCredentialRepository userCredentialRepository;
 
 
 	public static void main(String[] args) {
@@ -34,10 +39,14 @@ public class SpringBootSecureApiApplication implements CommandLineRunner {
         @Override
         public void run(String... args) throws Exception {
             userRepository.deleteAll();
+            userCredentialRepository.deleteAll();
             
             userRepository.save(new User("email1@.com", "Fabian", "Ardila", "email1@.com", "123", "cll 1# 1- 1"));
             userRepository.save(new User("emai2@.com", "Felipe", "Pardo", "email2@.com", "456", "cll 2# 2- 2"));
             userRepository.save(new User("emai3@.com", "Camila", "Gomez", "email3@.com", "789", "cll 3# 3- 3"));
+            
+            userCredentialRepository.save(new UserCredential("userName1", "hash1", "hashFunction1"));
+            userCredentialRepository.save(new UserCredential("userName2", "hash2", "hashFunction2"));
             
             System.out.println("Users found with findAll():");
             System.out.println("-------------------------------");
@@ -46,6 +55,17 @@ public class SpringBootSecureApiApplication implements CommandLineRunner {
                 System.out.println(usr);
             }
             System.out.println();
+            
+            System.out.println("-------------------------------");
+            System.out.println();
+            
+            System.out.println("Users Credentials found with findAll():");
+            System.out.println("-------------------------------");
+            
+            for (UserCredential usrCre : userCredentialRepository.findAll()) {
+                System.out.println(usrCre);
+            }
+            
         }
         
 }

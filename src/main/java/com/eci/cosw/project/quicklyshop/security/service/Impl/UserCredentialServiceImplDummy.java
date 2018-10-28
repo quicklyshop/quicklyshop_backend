@@ -24,7 +24,7 @@ public class UserCredentialServiceImplDummy implements UserCredentialService {
 
     @PostConstruct
     public void populateDummyData() {
-        UserCredential uc = new UserCredential("password", "raw");
+        UserCredential uc = new UserCredential("userName", "password", "raw");
         registerCredentials("andres-perez", uc);
     }
 
@@ -49,7 +49,7 @@ public class UserCredentialServiceImplDummy implements UserCredentialService {
     @Override
     public void registerPasswordCredentials(String username, String rawPassword) throws NullPointerException {
         DigestFunction dfunc = getDigestFunction(CURRENT_HASH_METHOD);
-        UserCredential userCredential = new UserCredential(String.valueOf(dfunc.encode(rawPassword)), CURRENT_HASH_METHOD);
+        UserCredential userCredential = new UserCredential(username, String.valueOf(dfunc.encode(rawPassword)), CURRENT_HASH_METHOD);
         registerCredentials(username, userCredential);
     }
 
