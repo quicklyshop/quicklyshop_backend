@@ -52,4 +52,14 @@ public class UserCredential {
     public void setHashFunction(String hashFunction) {
         this.hashFunction = hashFunction;
     }
+    
+    @Override
+    public String toString() {
+        return "UserCredential{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", hashedPassword='" + hashedPassword + '\'' +
+                ", hashFunction='" + hashFunction + '\'' +
+                '}';
+    }
 }
