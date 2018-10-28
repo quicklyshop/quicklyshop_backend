@@ -8,7 +8,7 @@ import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+//@Service
 public class UserServiceImpl implements UserService {
 
     private List<User> users;
