@@ -15,6 +15,10 @@ public class Token {
     String accessToken;
 
     Date creationTime;
+    
+    public Token() {
+        
+    }
 
     public Token(String access_token) {
         this.accessToken = access_token;
