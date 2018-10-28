@@ -15,17 +15,6 @@ public interface UserCredentialService {
      */
     UserCredential getUserCredential(String username) throws UserCredentialServiceException;
 
-
-    /**
-     * Registra nuevas credenciales para un usuario, si ya habian credenciales registradas para ese usuario entonces se
-     * reemplazan con las nuevas
-     *
-     * @param username    nombre de usuario
-     * @param credentials credenciales para registrar
-     * @throws NullPointerException el nombre de usuario o las credenciales son nulas
-     */
-    void registerCredentials(String username, UserCredential credentials) throws NullPointerException;
-
     /**
      * Registra nuevas credenciales para un usuario, junto con su contrasena
      * @param username nombre de usuario

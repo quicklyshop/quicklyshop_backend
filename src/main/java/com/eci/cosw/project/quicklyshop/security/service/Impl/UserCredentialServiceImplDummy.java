@@ -11,7 +11,7 @@ import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 
-@Service
+
 public class UserCredentialServiceImplDummy implements UserCredentialService {
 
     public static final String CURRENT_HASH_METHOD = "raw"; // TODO
@@ -25,7 +25,7 @@ public class UserCredentialServiceImplDummy implements UserCredentialService {
     @PostConstruct
     public void populateDummyData() {
         UserCredential uc = new UserCredential("userName", "password", "raw");
-        registerCredentials("andres-perez", uc);
+        credentials.put("andres-perez", uc);
     }
 
     @Override
@@ -38,19 +38,10 @@ public class UserCredentialServiceImplDummy implements UserCredentialService {
     }
 
     @Override
-    public void registerCredentials(String username, UserCredential userCredentials) throws NullPointerException {
-        if(username == null || userCredentials == null) {
-            throw new NullPointerException("El usuario o las credenciales son nulas");
-        }
-
-        credentials.put(username, userCredentials);
-    }
-
-    @Override
     public void registerPasswordCredentials(String username, String rawPassword) throws NullPointerException {
         DigestFunction dfunc = getDigestFunction(CURRENT_HASH_METHOD);
         UserCredential userCredential = new UserCredential(username, String.valueOf(dfunc.encode(rawPassword)), CURRENT_HASH_METHOD);
-        registerCredentials(username, userCredential);
+        credentials.put(username, userCredential);
     }
 
     @Override
