@@ -46,6 +46,7 @@ public class UserController {
 
         try {
             user = userService.getUser(username);
+            logger.debug("-------------------------The user is ----------------------------------"+user);
         } catch (UserServiceException ex) {
             logger.error(ex.getMessage());
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.FORBIDDEN);
