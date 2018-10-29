@@ -81,8 +81,8 @@ public class UserController {
         }
 
         logger.debug("Usernames coinciden!");
-        logger.debug("User --> "+reg.getUser());
-        logger.debug("User Login -->"+reg.getUserLogin());
+        logger.debug("User --> {}", reg.getUser());
+        logger.debug("User Login --> {}", reg.getUserLogin());
 
 
         try {

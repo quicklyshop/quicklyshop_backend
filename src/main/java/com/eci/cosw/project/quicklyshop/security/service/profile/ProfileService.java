@@ -5,7 +5,20 @@ import com.eci.cosw.project.quicklyshop.security.service.profile.exceptions.Prof
 
 public interface ProfileService {
 
-    void updateUserProfile(User userContent) throws ProfileServiceException;
+    /**
+     * Actualiza el perfil que corresponde al usuario indicado
+     * @param user parametros completos del usuario
+     * @throws ProfileServiceException el nombre de usuario no existe en la BD
+     * @throws NullPointerException el usuario es nulo
+     */
+    void updateUserProfile(User user) throws ProfileServiceException;
 
-    User getProfile(String username) throws ProfileServiceException;
+    /**
+     * Obtiene el usuario en base al nombre de usuario que tenga
+     * @param username nombre de usuario
+     * @return el usuario con sus parametros registrados
+     * @throws ProfileServiceException no existe ningun usuario con ese nombre de usuario
+     * @throws NullPointerException el string es nulo
+     */
+    User getUserProfile(String username) throws ProfileServiceException;
 }

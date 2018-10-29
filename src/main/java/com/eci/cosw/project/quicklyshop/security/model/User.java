@@ -9,8 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 
 @Document
-public class User
-{
+public class User {
     @Id
     private String id;
 
@@ -30,8 +29,11 @@ public class User
         this("", "", "", "", "", "");
     }
 
-    public User( String email, String firstname, String lastname, String username, String phone, String address)
-    {
+    public User(String email, String username) {
+        this(email, "", "", username, "", "");
+    }
+
+    public User(String email, String firstname, String lastname, String username, String phone, String address) {
         this.email = email;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -41,73 +43,59 @@ public class User
     }
 
 
-    public String getId()
-    {
+    public String getId() {
         return id;
     }
 
-    public void setId( String id )
-    {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getEmail()
-    {
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail( String email )
-    {
+    public void setEmail(String email) {
         this.email = email;
     }
 
-    public String getFirstname()
-    {
+    public String getFirstname() {
         return firstname;
     }
 
-    public void setFirstname( String firstname )
-    {
+    public void setFirstname(String firstname) {
         this.firstname = firstname;
     }
 
-    public String getLastname()
-    {
+    public String getLastname() {
         return lastname;
     }
 
-    public void setLastname( String lastname )
-    {
+    public void setLastname(String lastname) {
         this.lastname = lastname;
     }
 
-    public String getUsername()
-    {
+    public String getUsername() {
         return username;
     }
 
-    public void setUsername( String username )
-    {
+    public void setUsername(String username) {
         this.username = username;
     }
 
-    public String getPhone()
-    {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone( String phone)
-    {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
-    public String getAddress()
-    {
+    public String getAddress() {
         return address;
     }
 
-    public void setAddress( String address)
-    {
+    public void setAddress(String address) {
         this.address = address;
     }
 

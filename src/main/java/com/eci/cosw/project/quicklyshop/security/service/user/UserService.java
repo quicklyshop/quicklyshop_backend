@@ -25,7 +25,5 @@ public interface UserService
      */
     User createUser( User user ) throws UserServiceException;
 
-    User findUserByEmail( String email );
-
-    User findUserByEmailAndPassword( String email, String password );
+    User findUserByEmail( String email ); // XXX: por que esta aqui?
 }

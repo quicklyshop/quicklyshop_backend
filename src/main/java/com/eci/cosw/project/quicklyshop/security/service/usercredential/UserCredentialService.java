@@ -42,6 +42,6 @@ public interface UserCredentialService {
      * @throws UserCredentialServiceException la funcion hash no existe
      * @throws NullPointerException el nombre es nulo
      */
-    DigestFunction getDigestFunction(String digestFunctionName);
+    DigestFunction getDigestFunction(String digestFunctionName) throws UserCredentialServiceException;
 
 }

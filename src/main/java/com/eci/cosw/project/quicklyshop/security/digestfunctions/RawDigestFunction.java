@@ -1,6 +1,6 @@
 package com.eci.cosw.project.quicklyshop.security.digestfunctions;
 
-public class DummyDigestFunction implements DigestFunction {
+public class RawDigestFunction implements DigestFunction {
 
 
     @Override
