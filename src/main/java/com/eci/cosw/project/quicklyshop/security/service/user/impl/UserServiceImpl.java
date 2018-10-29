@@ -4,6 +4,7 @@ import com.eci.cosw.project.quicklyshop.security.model.User;
 import com.eci.cosw.project.quicklyshop.security.service.user.UserService;
 import com.eci.cosw.project.quicklyshop.security.service.user.exceptions.UserServiceException;
 import com.eci.cosw.project.quicklyshop.security.service.user.persistence.UserRepository;
+import com.eci.cosw.project.quicklyshop.security.service.usercredential.exceptions.UserCredentialServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUser(String username) {
+    public User getUser(String username) throws UserServiceException {
+        if (!userRepository.existsByUsername(username)) {
+            throw new UserServiceException("El usuario no existe");
+        }
         return userRepository.findUserByUsername(username);
     }
 
@@ -50,11 +54,6 @@ public class UserServiceImpl implements UserService {
         }
 
         return userRepository.save(user);
-    }
-
-    @Override
-    public User findUserByEmail(String email) {
-        return userRepository.findUserByEmail(email);
     }
 
 }

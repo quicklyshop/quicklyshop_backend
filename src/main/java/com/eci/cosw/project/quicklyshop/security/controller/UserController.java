@@ -5,6 +5,8 @@ import com.eci.cosw.project.quicklyshop.security.model.RegistrationForm;
 import com.eci.cosw.project.quicklyshop.security.model.User;
 import com.eci.cosw.project.quicklyshop.security.model.UserCredential;
 import com.eci.cosw.project.quicklyshop.security.model.UserLogin;
+import com.eci.cosw.project.quicklyshop.security.service.profile.ProfileService;
+import com.eci.cosw.project.quicklyshop.security.service.profile.exceptions.ProfileServiceException;
 import com.eci.cosw.project.quicklyshop.security.service.usercredential.exceptions.UserCredentialServiceException;
 import com.eci.cosw.project.quicklyshop.security.service.user.exceptions.UserServiceException;
 import com.eci.cosw.project.quicklyshop.security.service.user.UserService;
@@ -13,6 +15,7 @@ import com.eci.cosw.project.quicklyshop.security.service.usercredential.UserCred
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +37,9 @@ public class UserController {
 
     @Autowired
     private TokenService tokenService;
+
+    @Autowired
+    ProfileService profileService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<?> login(@RequestBody UserLogin login) throws ServletException, UserCredentialServiceException {
@@ -86,16 +92,26 @@ public class UserController {
 
 
         try {
-            logger.debug("Creando usuario");
+            logger.debug("Creando usuario...");
             userService.createUser(reg.getUser());
             logger.debug("Usuario creado!");
-            credentialService.registerPasswordCredentials(reg.getUserLogin().getUsername(), reg.getUserLogin().getPassword());
+            UserLogin userLogin = reg.getUserLogin();
+            credentialService.registerPasswordCredentials(userLogin.getUsername(), userLogin.getPassword());
             logger.debug("Registro de credenciales hecho");
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (UserServiceException ex) {
-            logger.debug("Error!");
             logger.error(ex.getMessage());
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @PostMapping("/profile")
+    public ResponseEntity<?> updateProfile(@RequestBody User user) {
+        try {
+            profileService.updateUserProfile(user);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        } catch (ProfileServiceException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
         }
     }
 

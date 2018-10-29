@@ -89,8 +89,6 @@ public class UserCredentialServiceImpl implements UserCredentialService {
             throw new UserCredentialServiceException("Funcion de digest no existe: " + digestFunctionName);
         }
 
-        System.out.println(res.getClass());
-
         return res;
     }
 }

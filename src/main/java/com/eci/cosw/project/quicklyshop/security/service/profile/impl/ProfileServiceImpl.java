@@ -15,7 +15,7 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public void updateUserProfile(User user) throws ProfileServiceException {
-        if(user == null) {
+        if(user == null || user.getUsername() == null || user.getUsername().trim().equals("")) {
             throw new NullPointerException("El usuario indicado es nulo");
         }
 
@@ -23,6 +23,8 @@ public class ProfileServiceImpl implements ProfileService {
             throw new ProfileServiceException("El usuario no existe en la BD");
         }
 
+        User realUser = userRepository.findUserByUsername(user.getUsername());
+        userRepository.deleteById(realUser.getId());
         userRepository.save(user);
     }
 
