@@ -1,4 +1,4 @@
-package com.eci.cosw.project.quicklyshop.security.service;
+package com.eci.cosw.project.quicklyshop.security.service.usercredential.exceptions;
 
 public class UserCredentialServiceException extends Exception {
 

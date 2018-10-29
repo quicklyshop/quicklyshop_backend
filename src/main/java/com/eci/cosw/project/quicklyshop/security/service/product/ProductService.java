@@ -1,4 +1,4 @@
-package com.eci.cosw.project.quicklyshop.security.service;
+package com.eci.cosw.project.quicklyshop.security.service.product;
 
 import com.eci.cosw.project.quicklyshop.security.model.Product;
 

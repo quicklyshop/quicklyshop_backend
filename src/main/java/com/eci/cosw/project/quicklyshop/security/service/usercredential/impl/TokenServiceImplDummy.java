@@ -1,7 +1,7 @@
-package com.eci.cosw.project.quicklyshop.security.service.Impl;
+package com.eci.cosw.project.quicklyshop.security.service.usercredential.impl;
 
 import com.eci.cosw.project.quicklyshop.security.model.Token;
-import com.eci.cosw.project.quicklyshop.security.service.TokenService;
+import com.eci.cosw.project.quicklyshop.security.service.usercredential.TokenService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Service;

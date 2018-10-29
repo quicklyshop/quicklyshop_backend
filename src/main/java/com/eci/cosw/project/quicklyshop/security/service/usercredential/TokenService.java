@@ -1,4 +1,4 @@
-package com.eci.cosw.project.quicklyshop.security.service;
+package com.eci.cosw.project.quicklyshop.security.service.usercredential;
 
 import com.eci.cosw.project.quicklyshop.security.model.Token;
 

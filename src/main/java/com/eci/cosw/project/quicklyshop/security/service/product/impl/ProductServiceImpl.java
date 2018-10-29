@@ -1,7 +1,7 @@
-package com.eci.cosw.project.quicklyshop.security.service.Impl;
+package com.eci.cosw.project.quicklyshop.security.service.product.impl;
 
 import com.eci.cosw.project.quicklyshop.security.model.Product;
-import com.eci.cosw.project.quicklyshop.security.service.ProductService;
+import com.eci.cosw.project.quicklyshop.security.service.product.ProductService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

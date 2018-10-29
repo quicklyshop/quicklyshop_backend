@@ -1,6 +1,7 @@
-package com.eci.cosw.project.quicklyshop.security.service;
+package com.eci.cosw.project.quicklyshop.security.service.user;
 
 import com.eci.cosw.project.quicklyshop.security.model.User;
+import com.eci.cosw.project.quicklyshop.security.service.user.exceptions.UserServiceException;
 
 import java.util.List;
 

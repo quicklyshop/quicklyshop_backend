@@ -1,4 +1,4 @@
-package com.eci.cosw.project.quicklyshop.security.service.persistence;
+package com.eci.cosw.project.quicklyshop.security.service.usercredential.persistence;
 
 import com.eci.cosw.project.quicklyshop.security.model.UserCredential;
 import org.springframework.data.mongodb.repository.MongoRepository;
