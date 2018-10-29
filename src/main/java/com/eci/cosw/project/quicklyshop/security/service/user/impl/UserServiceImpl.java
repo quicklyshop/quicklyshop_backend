@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -45,9 +44,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User createUser(User user) throws UserServiceException {
         logger.debug("Registering user: {}", user.toString());
+
         if (userRepository.existsByUsername(user.getUsername())) {
             throw new UserServiceException("El usuario ya existe.");
         }
+
         return userRepository.save(user);
     }
 

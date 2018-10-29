@@ -38,12 +38,8 @@ public class UserCredentialServiceImpl implements UserCredentialService {
 
         logger.debug("La contrasena del usuario de prueba en hash es: \'{}\'", uc.getHashedPassword());
 
-        if (!userCredentialRepository.existsByUserName(uc.getUserName())) {
-            registerCredentials(uc.getUserName(), uc);
-            logger.info("Las credenciales del usuario de prueba fueron registradas");
-        } else {
-            logger.error("Credenciales de usuario de prueba ya estan registrados");
-        }
+        registerCredentials(uc.getUserName(), uc);
+        logger.info("Las credenciales del usuario de prueba fueron registradas");
     }
 
     @Override
