@@ -1,49 +1,72 @@
 package com.eci.cosw.project.quicklyshop.security.service.usercredential.impl;
 
 import com.eci.cosw.project.quicklyshop.security.digestfunctions.DigestFunction;
-import com.eci.cosw.project.quicklyshop.security.digestfunctions.RawDigestFunction;
 import com.eci.cosw.project.quicklyshop.security.model.UserCredential;
 import com.eci.cosw.project.quicklyshop.security.service.usercredential.UserCredentialService;
 import com.eci.cosw.project.quicklyshop.security.service.usercredential.exceptions.UserCredentialServiceException;
+import com.eci.cosw.project.quicklyshop.security.service.usercredential.persistence.UserCredentialRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import javax.validation.constraints.Null;
-import java.util.HashMap;
-import java.util.Map;
 
-public class UserCredentialServiceImplDummy implements UserCredentialService {
+@Service
+public class UserCredentialServiceImpl implements UserCredentialService {
 
     public static final String CURRENT_HASH_METHOD = "Sha1";
 
-    private Map<String, UserCredential> credentials;
+    private static final Logger logger = LogManager.getLogger(UserCredentialServiceImpl.class);
 
-    public UserCredentialServiceImplDummy() {
-        credentials = new HashMap<>();
-    }
+    @Autowired
+    UserCredentialRepository userCredentialRepository;
 
     @PostConstruct
     public void populateDummyData() {
-        UserCredential uc = new UserCredential("andres-perez", "password", "Raw");
-        registerCredentials("andres-perez", uc);
+        DigestFunction dfunc = null;
+        try {
+            dfunc = getDigestFunction(CURRENT_HASH_METHOD);
+        } catch (UserCredentialServiceException e) {
+            throw new NullPointerException(e.getMessage());
+        }
+
+        UserCredential uc = new UserCredential(
+                "andres-perez",
+                String.valueOf(dfunc.encode("password")),
+                CURRENT_HASH_METHOD);
+
+        logger.debug("La contrasena del usuario de prueba en hash es: \'{}\'", uc.getHashedPassword());
+
+        if (!userCredentialRepository.existsByUserName(uc.getUserName())) {
+            registerCredentials(uc.getUserName(), uc);
+            logger.info("Las credenciales del usuario de prueba fueron registradas");
+        } else {
+            logger.error("Credenciales de usuario de prueba ya estan registrados");
+        }
     }
 
     @Override
     public UserCredential getUserCredential(String username) throws UserCredentialServiceException {
-        if (!credentials.containsKey(username)) {
+        if (!userCredentialRepository.existsByUserName(username)) {
             throw new UserCredentialServiceException("El usuario no tiene credenciales registradas");
         }
 
-        return credentials.get(username);
+        return userCredentialRepository.findUserCredentialByUserName(username);
     }
 
     @Override
     public void registerCredentials(String username, UserCredential userCredentials) throws NullPointerException {
-        if(username == null || userCredentials == null) {
+        if (username == null || userCredentials == null) {
             throw new NullPointerException("El usuario o las credenciales son nulas");
         }
 
-        credentials.put(username, userCredentials);
+        if (userCredentialRepository.existsByUserName(username)) {
+            UserCredential uc = userCredentialRepository.findUserCredentialByUserName(username);
+            userCredentialRepository.deleteById(uc.getId());
+        }
+
+        userCredentialRepository.save(userCredentials);
     }
 
     @Override
@@ -54,6 +77,7 @@ public class UserCredentialServiceImplDummy implements UserCredentialService {
         } catch (UserCredentialServiceException e) {
             throw new NullPointerException(e.getMessage());
         }
+
         UserCredential userCredential = new UserCredential(username, String.valueOf(dfunc.encode(rawPassword)), CURRENT_HASH_METHOD);
         registerCredentials(username, userCredential);
     }

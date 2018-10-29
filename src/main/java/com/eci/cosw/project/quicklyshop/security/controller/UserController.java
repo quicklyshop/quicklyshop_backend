@@ -30,10 +30,10 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    UserCredentialService credentialService;
+    private UserCredentialService credentialService;
 
     @Autowired
-    TokenService tokenService;
+    private TokenService tokenService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<?> login(@RequestBody UserLogin login) throws ServletException, UserCredentialServiceException {

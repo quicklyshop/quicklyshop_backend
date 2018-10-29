@@ -11,11 +11,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class TokenServiceImplDummy implements TokenService {
+public class TokenServiceImpl implements TokenService {
 
     private Map<String, Token> tokens;
 
-    public TokenServiceImplDummy() {
+    public TokenServiceImpl() {
         tokens = new HashMap<>();
     }
 

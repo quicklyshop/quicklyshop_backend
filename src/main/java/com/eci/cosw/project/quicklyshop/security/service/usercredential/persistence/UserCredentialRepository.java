@@ -8,5 +8,7 @@ public interface UserCredentialRepository extends MongoRepository<UserCredential
     UserCredential findUserCredentialById(String id);
     
     UserCredential findUserCredentialByUserName(String userName);
+
+    boolean existsByUserName(String username);
     
 }
