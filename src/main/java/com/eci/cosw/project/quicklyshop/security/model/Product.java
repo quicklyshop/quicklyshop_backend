@@ -1,8 +1,11 @@
 package com.eci.cosw.project.quicklyshop.security.model;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonPropertyOrder({ "name", "price", "description", "supplier"})
 public class Product {
 
-    private long id;
+    private String id;
 
     private String name;
 
@@ -24,11 +27,11 @@ public class Product {
         this.supplier = supplier;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
