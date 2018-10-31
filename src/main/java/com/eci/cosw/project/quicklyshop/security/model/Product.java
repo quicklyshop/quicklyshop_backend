@@ -1,10 +1,11 @@
 package com.eci.cosw.project.quicklyshop.security.model;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import org.springframework.data.annotation.Id;
 
 @JsonPropertyOrder({ "name", "price", "description", "supplier"})
 public class Product {
-
+    @Id
     private String id;
 
     private String name;
@@ -14,6 +15,9 @@ public class Product {
     private String description;
 
     private String supplier;
+
+
+    private int quantity;
 
 
     public Product() {
@@ -26,6 +30,15 @@ public class Product {
         this.description = description;
         this.supplier = supplier;
     }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
 
     public String getId() {
         return id;

@@ -3,6 +3,8 @@ package com.eci.cosw.project.quicklyshop.security.service.inventory.impl;
 import com.eci.cosw.project.quicklyshop.security.model.Product;
 import com.eci.cosw.project.quicklyshop.security.service.inventory.InventoryService;
 import com.eci.cosw.project.quicklyshop.security.service.inventory.exceptions.InventoryServiceException;
+import com.eci.cosw.project.quicklyshop.security.service.inventory.persistence.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -10,23 +12,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
-public class InventoryServiceDummy implements InventoryService {
+@Service
+public class InventoryServiceImpl implements InventoryService {
 
     private long actual_id;
 
-    private Map<String, Product> products;
+    @Autowired
+    ProductRepository productRepository;
 
-    public InventoryServiceDummy() {
+    public InventoryServiceImpl() {
         actual_id = 0L;
-        products = new HashMap<>();
     }
 
     private void addProductWithId(Product product) {
         String newId = Long.toString(actual_id++);
 
         product.setId(newId);
-        products.put(newId, product);
+        productRepository.save(product);
     }
 
     @Override
@@ -39,27 +41,22 @@ public class InventoryServiceDummy implements InventoryService {
             throw new InventoryServiceException("La cantidad de productos a agregar al inventario no puede ser menor o igual a cero");
         }
 
-
         product.setQuantity(quantity);
-        addProductWithId(product);
-    }
+        
+        productRepository.save(product);
+   }
 
     @Override
-    public void removeProductById(String id) throws InventoryServiceException {
-        if (id == null) {
+    public void removeProductById(String id) throws InventoryServiceException { if (id == null) {
             throw new NullPointerException();
         }
-
-        if (!products.containsKey(id)) {
-            throw new InventoryServiceException("No existe el producto con ese id");
-        }
-
-        products.remove(id);
+        productRepository.deleteById(id);
     }
+    
 
     @Override
     public List<Product> getAllProducts() {
-        return new ArrayList<>(products.values());
+        return productRepository.findAll();
     }
 
     @Override
@@ -67,11 +64,7 @@ public class InventoryServiceDummy implements InventoryService {
         if (id == null) {
             throw new NullPointerException();
         }
-
-        if (!products.containsKey(id)) {
-            throw new InventoryServiceException("No existe el producto con ese id");
-        }
-
-        return products.get(id);
+        
+        return productRepository.findProductById(id);
     }
 }
