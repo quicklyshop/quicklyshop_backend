@@ -83,7 +83,7 @@ public class UserCredentialServiceImpl implements UserCredentialService {
         DigestFunction res;
 
         try {
-            Class clazz = Class.forName("com.eci.cosw.project.quicklyshop.security.digestfunctions." + digestFunctionName + "DigestFunction");
+            Class clazz = Class.forName("com.eci.cosw.project.quicklyshop.digestfunctions." + digestFunctionName + "DigestFunction");
             res = (DigestFunction) clazz.newInstance();
         } catch (Exception e) {
             throw new UserCredentialServiceException("Funcion de digest no existe: " + digestFunctionName);

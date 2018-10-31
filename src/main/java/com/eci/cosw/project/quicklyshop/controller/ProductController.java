@@ -2,8 +2,8 @@ package com.eci.cosw.project.quicklyshop.controller;
 
 import com.eci.cosw.project.quicklyshop.model.Product;
 import com.eci.cosw.project.quicklyshop.service.inventory.InventoryService;
+import com.eci.cosw.project.quicklyshop.service.inventory.exceptions.InventoryServiceException;
 import com.eci.cosw.project.quicklyshop.service.inventory.impl.ProductCsvReader;
-import com.eci.cosw.project.quicklyshop.service.product.ProductService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,25 +26,45 @@ public class ProductController {
     private static final Logger logger = LogManager.getLogger(ProductController.class);
 
     @Autowired
-    private ProductService productService;
-
-    @Autowired
     private InventoryService inventoryService;
 
-    @RequestMapping(value = "/products", method = RequestMethod.GET)
+    @GetMapping("/products")
     public List<Product> getProductList() {
-        return productService.getProductList();
+        return inventoryService.getAllProducts();
     }
 
 
-    @RequestMapping(value = "/products", method = RequestMethod.POST)
+    @PostMapping("/products")
     public ResponseEntity<?> addProduct(@RequestBody Product product) {
-        productService.addProduct(product);
+        try {
+            inventoryService.addProduct(product, 1);
+        } catch (InventoryServiceException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
+    @PostMapping("/products/{quantity}")
+    public ResponseEntity<?> addProduct(@RequestBody Product product, @PathVariable("quantity") int quantity) {
+        try {
+            inventoryService.addProduct(product, quantity);
+        } catch (InventoryServiceException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/products/{id}")
+    public ResponseEntity<?> getProductById(@PathVariable("id") String id) {
+        try {
+            return new ResponseEntity<>(inventoryService.getProductById(id), HttpStatus.OK);
+        } catch (InventoryServiceException e) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+    }
+
     @PostMapping("/import")
-    public ResponseEntity<?> importCsvFileToInventory(@RequestParam(value = "file", required = true) MultipartFile file, RedirectAttributes redirectAttributes) {
+    public ResponseEntity<?> importCsvFileToInventory(@RequestParam(value = "file", required = true) MultipartFile file, RedirectAttributes redirectAttributes) throws Exception {
         logger.debug("New CSV file received {}", file.getOriginalFilename());
 
         if (!file.getContentType().equals("text/csv")) {
@@ -61,7 +81,7 @@ public class ProductController {
         logger.debug("Importando CSV...");
         for (Product product : products) {
             logger.debug("Producto: {}", product.toString());
-            productService.addProduct(product);
+            inventoryService.addProduct(product, 1);
         }
         logger.debug("Importado de CSV completado");
 
@@ -69,7 +89,7 @@ public class ProductController {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
-    public static byte[] toByteArray(InputStream in) throws IOException {
+    private static byte[] toByteArray(InputStream in) throws IOException {
 
         ByteArrayOutputStream os = new ByteArrayOutputStream();
 
