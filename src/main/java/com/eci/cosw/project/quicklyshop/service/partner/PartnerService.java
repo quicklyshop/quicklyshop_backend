@@ -26,7 +26,7 @@ public interface PartnerService {
      * @param id id del socio
      * @throws PartnerServiceException el socio no esta registrado
      */
-    void removePartnerById(String id) throws PartnerServiceException;
+    void removePartnerByIdent(String id) throws PartnerServiceException;
 
     /**
      * Obtiene el socio por id
@@ -34,7 +34,7 @@ public interface PartnerService {
      * @return socio
      * @throws PartnerServiceException el socio no esta registrado
      */
-    Partner getPartnerById(String id) throws PartnerServiceException;
+    Partner getPartnerByIdent(String id) throws PartnerServiceException;
 
     /**
      * Obtiene todos los socios registrados
