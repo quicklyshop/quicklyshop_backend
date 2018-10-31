@@ -44,6 +44,25 @@ public class ProductController {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
+    @PostMapping("/products/{quantity}")
+    public ResponseEntity<?> addProduct(@RequestBody Product product, @PathVariable("quantity") int quantity) {
+        try {
+            inventoryService.addProduct(product, quantity);
+        } catch (InventoryServiceException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/products/{id}")
+    public ResponseEntity<?> getProductById(@PathVariable("id") String id) {
+        try {
+            return new ResponseEntity<>(inventoryService.getProductById(id), HttpStatus.OK);
+        } catch (InventoryServiceException e) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+    }
+
     @PostMapping("/import")
     public ResponseEntity<?> importCsvFileToInventory(@RequestParam(value = "file", required = true) MultipartFile file, RedirectAttributes redirectAttributes) throws Exception {
         logger.debug("New CSV file received {}", file.getOriginalFilename());
