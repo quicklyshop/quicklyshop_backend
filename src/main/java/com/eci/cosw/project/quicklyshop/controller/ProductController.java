@@ -64,11 +64,11 @@ public class ProductController {
     }
 
     @PostMapping("/import")
-    public ResponseEntity<?> importCsvFileToInventory(@RequestParam(value = "file", required = true) MultipartFile file, RedirectAttributes redirectAttributes) throws Exception {
+    public ResponseEntity<?> importCsvFileToInventory(@RequestParam(value = "file", required = true) MultipartFile file, RedirectAttributes redirectAttributes) {
         logger.debug("New CSV file received {}", file.getOriginalFilename());
 
         if (!file.getContentType().equals("text/csv")) {
-            return new ResponseEntity<>("El archivo no es  un archivo CSV", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("El archivo no parece ser un archivo CSV", HttpStatus.BAD_REQUEST);
         }
 
         List<Product> products = null;
@@ -79,9 +79,14 @@ public class ProductController {
         }
 
         logger.debug("Importando CSV...");
-        for (Product product : products) {
-            logger.debug("Producto: {}", product.toString());
-            inventoryService.addProduct(product, 1);
+        try {
+            for (Product product : products) {
+                logger.debug("Producto: {}", product.toString());
+                inventoryService.addProduct(product, 1);
+            }
+        } catch (InventoryServiceException ex) {
+            logger.error(ex.getMessage());
+            return new ResponseEntity<>("Error importando informacion", HttpStatus.INTERNAL_SERVER_ERROR);
         }
         logger.debug("Importado de CSV completado");
 

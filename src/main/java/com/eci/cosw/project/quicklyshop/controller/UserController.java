@@ -114,9 +114,9 @@ public class UserController {
         }
     }
     
-    @GetMapping("/{user}")
-    public User getUser(@PathVariable String user) throws ProfileServiceException {
-        return profileService.getUserProfile(user);
+    @GetMapping("/{username}")
+    public User getUser(@PathVariable String username) throws ProfileServiceException {
+        return profileService.getUserProfile(username);
     }
 
 }
