@@ -2,6 +2,7 @@ package com.eci.cosw.project.quicklyshop.security.controller;
 
 import com.eci.cosw.project.quicklyshop.security.model.Product;
 import com.eci.cosw.project.quicklyshop.security.service.inventory.InventoryService;
+import com.eci.cosw.project.quicklyshop.security.service.inventory.exceptions.InventoryServiceException;
 import com.eci.cosw.project.quicklyshop.security.service.inventory.impl.ProductCsvReader;
 import com.eci.cosw.project.quicklyshop.security.service.product.ProductService;
 import org.apache.logging.log4j.LogManager;
@@ -45,7 +46,7 @@ public class ProductController {
     }
 
     @PostMapping("/import")
-    public ResponseEntity<?> importCsvFileToInventory(@RequestParam(value = "file", required = true) MultipartFile file, RedirectAttributes redirectAttributes) {
+    public ResponseEntity<?> importCsvFileToInventory(@RequestParam(value = "file", required = true) MultipartFile file, RedirectAttributes redirectAttributes) throws Exception {
         logger.debug("New CSV file received {}", file.getOriginalFilename());
 
         if (!file.getContentType().equals("text/csv")) {
@@ -62,7 +63,7 @@ public class ProductController {
         logger.debug("Importando CSV...");
         for (Product product : products) {
             logger.debug("Producto: {}", product.toString());
-            productService.addProduct(product);
+            inventoryService.addProduct(product, 1);
         }
         logger.debug("Importado de CSV completado");
 
