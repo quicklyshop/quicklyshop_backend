@@ -114,5 +114,10 @@ public class UserController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
         }
     }
+    
+    @GetMapping("/{user}")
+    public User getUser(@PathVariable String user) throws ProfileServiceException {
+        return profileService.getUserProfile(user);
+    }
 
 }
