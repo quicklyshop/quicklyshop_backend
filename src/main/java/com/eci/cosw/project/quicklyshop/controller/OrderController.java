@@ -1,14 +1,14 @@
 package com.eci.cosw.project.quicklyshop.controller;
 
 import com.eci.cosw.project.quicklyshop.model.Order;
+import com.eci.cosw.project.quicklyshop.service.order.OrderService;
+import com.eci.cosw.project.quicklyshop.service.order.exceptions.OrderServiceException;
 import com.eci.cosw.project.quicklyshop.service.order.persistence.OrderRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.repository.query.Param;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,9 +20,9 @@ public class OrderController {
     private static final Logger logger = LogManager.getLogger(ProductController.class);
 
     @Autowired
-    OrderRepository orderRepository;
+    OrderService orderService;
 
-    @GetMapping("/orders")
-    public List<Order> getOrders(){return orderRepository}
+    @GetMapping("/orders/{id}")
+    public Order getOrderById(@PathVariable("id")String id) throws OrderServiceException {return orderService.getOrderById(id);}
 
 }
