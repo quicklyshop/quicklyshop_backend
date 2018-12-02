@@ -10,5 +10,6 @@ public interface OrderRepository extends MongoRepository<Order, String> {
     Order findOrderByUser(User user);
     Order findOrderById(String id);
     List<Order> findAll();
-    List<Order> getAllOrders();
+    Order save(Order order);
+    void delete(Order order);
 }
