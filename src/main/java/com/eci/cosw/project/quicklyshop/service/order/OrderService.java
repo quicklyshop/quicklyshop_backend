@@ -1,7 +1,10 @@
 package com.eci.cosw.project.quicklyshop.service.order;
 
 import com.eci.cosw.project.quicklyshop.model.Order;
+import com.eci.cosw.project.quicklyshop.service.inventory.exceptions.InventoryServiceException;
 import com.eci.cosw.project.quicklyshop.service.order.exceptions.OrderServiceException;
+
+import java.util.List;
 
 public interface OrderService {
     /**
@@ -17,4 +20,19 @@ public interface OrderService {
      * @throws OrderServiceException si la orden no existe
      */
     Order getOrderById(String id) throws OrderServiceException;
+
+    /**
+     * Consulta todas las ordenes en el sistemas
+     * @return lista de tipo Order con las caracteristicas de cada una de las ordenes
+     * @throws OrderServiceException cuando no existen ordenes registradas
+     */
+    List<Order> getAllOrders() throws  OrderServiceException;
+
+
+    /**
+     * Remueve una orden dado su identificador
+     * @param id de la orden que se desea remover
+     * @throws OrderServiceException cuando la orden con el identificador dado no existe
+     */
+    void removeOrderById(String id) throws OrderServiceException;
 }

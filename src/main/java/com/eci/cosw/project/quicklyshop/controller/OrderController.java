@@ -1,6 +1,7 @@
 package com.eci.cosw.project.quicklyshop.controller;
 
 import com.eci.cosw.project.quicklyshop.model.Order;
+import com.eci.cosw.project.quicklyshop.service.inventory.exceptions.InventoryServiceException;
 import com.eci.cosw.project.quicklyshop.service.order.OrderService;
 import com.eci.cosw.project.quicklyshop.service.order.exceptions.OrderServiceException;
 import com.eci.cosw.project.quicklyshop.service.order.persistence.OrderRepository;
@@ -25,4 +26,13 @@ public class OrderController {
     @GetMapping("/orders/{id}")
     public Order getOrderById(@PathVariable("id")String id) throws OrderServiceException {return orderService.getOrderById(id);}
 
+    @GetMapping("/orders")
+    public List<Order> getOrders() throws OrderServiceException {return orderService.getAllOrders();}
+
+    @PostMapping("/orders")
+    public void addOrder(Order order ) throws OrderServiceException {orderService.addOrder(order);}
+
+    @DeleteMapping("/oders")
+    public void removeOrderById(String id) throws OrderServiceException {orderService.removeOrderById(id);}
+    
 }
