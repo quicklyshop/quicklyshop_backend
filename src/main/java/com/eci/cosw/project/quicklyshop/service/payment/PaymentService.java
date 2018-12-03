@@ -7,13 +7,6 @@ import java.util.List;
 
 public interface PaymentService {
     /**
-     * Retorna los pagos que han sido registrados
-     * @return Lista de tipo Payment con las caracteristicas de cada pago
-     * @throws PaymentServiceException cuando no existen pagos registrados en la base de datos
-     */
-    Payment  getPayment(String id) throws PaymentServiceException;
-
-    /**
      * Añade nuevos pagos a la base de datos
      * @param payment objeto Payment con infomración acerca del pago
      * @return Payment objeto con información del pago

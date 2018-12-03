@@ -19,13 +19,8 @@ public class PaymentServiceImpl implements PaymentService {
     PaymentRepository paymentRepository;
 
     @Override
-    public Payment getPayment(String id) throws PaymentServiceException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public Payment createPayment(Payment payment) throws PaymentServiceException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return paymentRepository.save(payment);
     }
 
     @Override
@@ -35,7 +30,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public List<Payment> getPayments() throws PaymentServiceException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return paymentRepository.findAll();
     }
     
 }
