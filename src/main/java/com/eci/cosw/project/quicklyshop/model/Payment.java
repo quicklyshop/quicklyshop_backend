@@ -1,17 +1,18 @@
 package com.eci.cosw.project.quicklyshop.model;
 
+import java.util.Date;
+
 public class Payment {
 
     private String id;
     private User user;
     private Order order;
-    private String paymentMethod;
+    private Date datePayment;
 
-    public Payment(String id, User user, Order order, String paymentMethod) {
+    public Payment(String id, User user, Order order) {
         this.id = id;
         this.user = user;
         this.order = order;
-        this.paymentMethod = paymentMethod;
     }
 
     public String getId() {
@@ -38,12 +39,8 @@ public class Payment {
         this.order = order;
     }
 
-    public String getPaymentMethod() {
-        return paymentMethod;
-    }
-
-    public void setPaymentMethod(String paymentMethod) {
-        this.paymentMethod = paymentMethod;
+    public Date getDatePayment() {
+        return datePayment;
     }
 
     @Override
@@ -52,7 +49,7 @@ public class Payment {
                 "id=" + id +
                 ", user='" + user + '\'' +
                 ", order='" + order + '\'' +
-                ", PaymentMethod='" + paymentMethod + '\'' +
+                ", DatePayment='" + datePayment + '\'' +
                 '}';
     }
 }
