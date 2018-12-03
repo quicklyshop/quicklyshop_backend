@@ -7,7 +7,6 @@ import com.eci.cosw.project.quicklyshop.service.payment.exception.PaymentService
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +18,7 @@ import java.util.List;
 @RequestMapping("api")
 public class PaymentController {
 
-    private static final Logger logger = LogManager.getLogger(ProductController.class);
+    private static final Logger logger = LogManager.getLogger(PaymentController.class);
 
     @Autowired
     private PaymentService paymentService;
@@ -36,7 +35,7 @@ public class PaymentController {
     }
 
     @GetMapping(path = "/payment/{id}")
-    public Payment getPaymentById(@Param(value="id")String id ) throws PaymentServiceException{
+    public Payment getPaymentById(@PathVariable String id ) throws PaymentServiceException{
         return paymentService.getPaymentById(id);
     }
 
