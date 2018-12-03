@@ -30,7 +30,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public List<Payment> getPayments() throws PaymentServiceException {
-        return paymentRepository.findAll();
+        return paymentRepository.findAllPayment();
     }
     
 }

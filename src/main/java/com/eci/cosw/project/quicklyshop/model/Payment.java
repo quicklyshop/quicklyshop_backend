@@ -7,12 +7,13 @@ public class Payment {
     private String id;
     private User user;
     private Order order;
-    private Date datePayment;
+    private Date date;
 
     public Payment(String id, User user, Order order) {
         this.id = id;
         this.user = user;
         this.order = order;
+        this.date = new Date();
     }
 
     public String getId() {
@@ -40,7 +41,7 @@ public class Payment {
     }
 
     public Date getDatePayment() {
-        return datePayment;
+        return date;
     }
 
     @Override
@@ -49,7 +50,7 @@ public class Payment {
                 "id=" + id +
                 ", user='" + user + '\'' +
                 ", order='" + order + '\'' +
-                ", DatePayment='" + datePayment + '\'' +
+                ", DatePayment='" + date + '\'' +
                 '}';
     }
 }
